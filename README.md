@@ -19,4 +19,4 @@
 [GitHubLink](https://github.com/Dimitry364/mesto-react)
 
 ## Ссылка на GitHub Pages:
-https://dimitry364.github.io/mesto/
+[Pages](https://dimitry364.github.io/mesto-react/)
