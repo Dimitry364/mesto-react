@@ -3,7 +3,6 @@ import Card from "./Card";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
 
 function Main(props) {
-
   const currentUser = React.useContext(CurrentUserContext);
 
   return (
@@ -47,11 +46,11 @@ function Main(props) {
       </section>
       <section className="elements">
         <ul className="elements__list">
-          {props.cards.map((initialCardsData, _id) => (
+          {props.cards.map((cardsData, id) => (
             <Card
-              key={_id}
-              card={initialCardsData}
-              likes={initialCardsData.likes.length}
+              key={id}
+              card={cardsData}
+              likes={cardsData.likes.length}
               onCardClick={props.onCardClick}
               onCardLike={props.onCardLike}
               onCardDelete={props.onCardDelete}

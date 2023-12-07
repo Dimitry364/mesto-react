@@ -12,11 +12,11 @@ function AddPlacePopup(props) {
     }
   }, [props.isOpen]);
 
-  function handleName(evt) {
+  function handleNameChange(evt) {
     setName(evt.target.value);
   }
 
-  function handleLink(evt) {
+  function handleLinkChange(evt) {
     setLink(evt.target.value);
   }
 
@@ -34,13 +34,13 @@ function AddPlacePopup(props) {
     <PopupWithForm
       isOpen={props.isOpen}
       onClose={props.onClose}
-      onClick={props.onClick}
-      buttonText={props.buttonText}
-      onCloseClick={props.onCloseClick}
-      disabled={!link}
+      onCloseClickOverlay={props.onCloseClickOverlay}
       id={"popup-add"}
       form={"card-create"}
       title={"Новое место"}
+      submitButtonAdd={"Создать"}
+      submitButtonLoading={"Сохранение..."}
+      onPlaceLoading={props.onPlaceLoading}
       onSubmit={handleSubmit}
     >
       <div className="popup__field">
@@ -53,7 +53,7 @@ function AddPlacePopup(props) {
           name="name"
           value={name}
           placeholder="Название"
-          onChange={handleName}
+          onChange={handleNameChange}
           required
         />
         <span className="popup__add-name-input-error popup__input-error" />
@@ -66,7 +66,7 @@ function AddPlacePopup(props) {
           name="link"
           value={link}
           placeholder="Ссылка на картинку"
-          onChange={handleLink}
+          onChange={handleLinkChange}
           required
         />
         <span className="popup__add-link-input-error popup__input-error" />

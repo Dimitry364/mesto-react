@@ -1,9 +1,20 @@
+import React from "react";
+
 function PopupWithForm(props) {
+
+  React.useEffect(() => {
+    if (props.isOpen) {
+      document.addEventListener('mousedown', props.onCloseClickOverlay);
+    } else {
+      document.removeEventListener('mousedown', props.onCloseClickOverlay);
+    }
+  }, [props.isOpen])
+
   return (
     <div
       className={`popup ${props.isOpen && `popup_opened`}`}
       id={`${props.id}`}
-      onClick={props.onCloseClick}
+      onClick={props.onCloseClickOverlay}
     >
       <div className="popup__container">
         <form
@@ -16,16 +27,12 @@ function PopupWithForm(props) {
           <fieldset className="popup__fieldset">
             {props.children}
             <button
-              className={`popup__button ${
-                props.disabled && `popup__button_disabled`
-              }`}
+              className="popup__button"
               name="submit"
               type="submit"
-              disabled={props.disabled}
-              onClick={props.onClick}
-              title={props.buttonText}
+              title={props.submitButtonAdd}
             >
-              {props.buttonText}
+              {props.onPlaceLoading ? props.submitButtonLoading : props.submitButtonAdd}
             </button>
           </fieldset>
           <button

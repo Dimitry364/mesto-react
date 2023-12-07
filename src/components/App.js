@@ -18,21 +18,15 @@ function App() {
   const [selectedCard, setSelectedCard] = React.useState(null);
   const [currentUser, setCurrentUser] = React.useState({});
   const [cards, setCards] = React.useState([]);
-
-  const initialState = "Создать";
-  const [buttonTextPopup, setButtonTextPopup] = React.useState(initialState);
-
-  function changeButtonPopup() {
-    setButtonTextPopup("Сохранение...");
-    setTimeout(() => setButtonTextPopup(initialState), [2000]);
-  }
+  const [isAddPlaceLoading, setIsAddPlaceLoading] = React.useState(false);
+  const [isAvatarPlaceLoading, setIsAvatarPlaceLoading] = React.useState(false);
 
   React.useEffect(() => {
     api
       .getInitialData()
-      .then(([userData, initialCardsData]) => {
+      .then(([userData, cardsData]) => {
         setCurrentUser(userData);
-        setCards(initialCardsData);
+        setCards(cardsData);
       })
       .catch((err) => {
         console.error(err);
@@ -65,9 +59,9 @@ function App() {
       });
   }
 
-  function handleUpdateUser(name, about) {
+  function handleUpdateUser({ name, about }) {
     api
-      .setUser(name, about)
+      .setUser({ name, about })
       .then((newUser) => {
         setCurrentUser(newUser);
         closeAllPopups();
@@ -78,6 +72,7 @@ function App() {
   }
 
   function handleAvatarUpdate(data) {
+    setIsAvatarPlaceLoading(true);
     api
       .updateAvatar(data)
       .then((newAvatar) => {
@@ -86,18 +81,26 @@ function App() {
       })
       .catch((err) => {
         console.error(err);
+      })
+      .finally(() => {
+        setIsAvatarPlaceLoading(false);
       });
   }
 
-  function handleAddPlaceSubmit(name, link) {
+  function handleAddPlaceSubmit({ name, link }) {
+    setIsAddPlaceLoading(true);
     api
-      .addCard(name, link)
+      .addCard({ name, link })
       .then((newCard) => {
         setCards([newCard, ...cards]);
         closeAllPopups();
       })
       .catch((err) => {
         console.error(err);
+      })
+      .finally(() => {
+        setIsAddPlaceLoading(false);
+        setIsAvatarPlaceLoading(false);
       });
   }
 
@@ -117,7 +120,7 @@ function App() {
     setSelectedCard(card);
   }
 
-  function handlePopupCloseClick(evt) {
+  function handlePopupCloseClickByOverlay(evt) {
     if (evt.target.classList.contains("popup")) {
       closeAllPopups();
     }
@@ -148,29 +151,27 @@ function App() {
         <EditProfilePopup
           isOpen={isEditProfilePopupOpen}
           onClose={closeAllPopups}
-          onCloseClick={handlePopupCloseClick}
+          onCloseClickOverlay={handlePopupCloseClickByOverlay}
           onUpdateUser={handleUpdateUser}
         />
         <EditAvatarPopup
           isOpen={isEditAvatarPopupOpen}
           onClose={closeAllPopups}
           onUpdateUser={handleAvatarUpdate}
-          onClick={changeButtonPopup}
-          onCloseClick={handlePopupCloseClick}
-          buttonText={buttonTextPopup}
+          onCloseClickOverlay={handlePopupCloseClickByOverlay}
+          onPlaceLoading={isAvatarPlaceLoading}
         />
         <AddPlacePopup
           isOpen={isAddPlacePopupOpen}
           onClose={closeAllPopups}
           onUpdateUser={handleAddPlaceSubmit}
-          onClick={changeButtonPopup}
-          onCloseClick={handlePopupCloseClick}
-          buttonText={buttonTextPopup}
+          onCloseClickOverlay={handlePopupCloseClickByOverlay}
+          onPlaceLoading={isAddPlaceLoading}
         />
         <ImagePopup
           card={selectedCard}
           onClose={closeAllPopups}
-          onCloseClick={handlePopupCloseClick}
+          onCloseClickOverlay={handlePopupCloseClickByOverlay}
         />
       </div>
     </CurrentUserContext.Provider>

@@ -5,7 +5,7 @@ function ImagePopup(props) {
         props.card && "popup_opened"
       }`}
       id="popup-photos"
-      onClick={props.onCloseClick}
+      onClick={props.onCloseClickOverlay}
     >
       <div className="popup__photos-container">
         <img
