@@ -3,22 +3,27 @@ function PopupWithForm(props) {
     <div
       className={`popup ${props.isOpen && `popup_opened`}`}
       id={`${props.id}`}
+      onClick={props.onCloseClick}
     >
       <div className="popup__container">
         <form
           className="popup__form"
           action="#"
           name={props.form}
-          // noValidate
+          onSubmit={props.onSubmit}
         >
           <h2 className="popup__title">{props.title}</h2>
           <fieldset className="popup__fieldset">
             {props.children}
             <button
-              className="popup__button"
+              className={`popup__button ${
+                props.disabled && `popup__button_disabled`
+              }`}
               name="submit"
               type="submit"
-              title="Сохранить"
+              disabled={props.disabled}
+              onClick={props.onClick}
+              title={props.buttonText}
             >
               {props.buttonText}
             </button>

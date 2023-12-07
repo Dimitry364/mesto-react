@@ -1,22 +1,10 @@
 import React from "react";
-import api from "../utils/Api";
 import Card from "./Card";
+import { CurrentUserContext } from "../contexts/CurrentUserContext";
 
 function Main(props) {
-  const [userInfo, setUserInfo] = React.useState({});
-  const [cards, setCards] = React.useState([]);
 
-  React.useEffect(() => {
-    api
-      .getInitialData()
-      .then(([userData, initialCardsData]) => {
-        setUserInfo(userData);
-        setCards(initialCardsData);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, []);
+  const currentUser = React.useContext(CurrentUserContext);
 
   return (
     <main className="content">
@@ -31,14 +19,14 @@ function Main(props) {
             />
             <img
               className="profile__avatar"
-              alt="Аватар"
-              src={userInfo.avatar}
+              alt={currentUser.name}
+              src={currentUser.avatar}
             />
           </div>
           <div className="profile__info">
             <div className="profile__info-container">
               <h1 className="profile__name">
-                <span className="profile__span">{userInfo.name}</span>
+                <span className="profile__span">{currentUser.name}</span>
               </h1>
               <button
                 className="profile__edit-button"
@@ -47,7 +35,7 @@ function Main(props) {
                 onClick={props.onEditProfile}
               />
             </div>
-            <p className="profile__about">{userInfo.about}</p>
+            <p className="profile__about">{currentUser.about}</p>
           </div>
         </div>
         <button
@@ -59,12 +47,14 @@ function Main(props) {
       </section>
       <section className="elements">
         <ul className="elements__list">
-          {cards.map((initialCardsData, _id) => (
+          {props.cards.map((initialCardsData, _id) => (
             <Card
               key={_id}
               card={initialCardsData}
               likes={initialCardsData.likes.length}
               onCardClick={props.onCardClick}
+              onCardLike={props.onCardLike}
+              onCardDelete={props.onCardDelete}
             />
           ))}
         </ul>

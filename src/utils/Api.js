@@ -1,91 +1,90 @@
 class Api {
-    constructor(options) {
-        this._baseUrl = options.baseUrl;
-        this._headers = options.headers;
-    }
+  constructor(options) {
+    this._baseUrl = options.baseUrl;
+    this._headers = options.headers;
+  }
 
-    getInitialData() {
-        return Promise.all([this.getUser(), this.getInitialCards()]);
-    }
+  getInitialData() {
+    return Promise.all([this.getUser(), this.getInitialCards()]);
+  }
 
-    getUser() {
-        return this._request(this._baseUrl + '/users/me', {
-            method: 'GET',
-            headers: this._headers
-        });
-    }
+  getUser() {
+    return this._request(this._baseUrl + "/users/me", {
+      method: "GET",
+      headers: this._headers,
+    });
+  }
 
-    setUser({ name, about }) {
-        return this._request(this._baseUrl + '/users/me', {
-            method: 'PATCH',
-            headers: this._headers,
-            body: JSON.stringify({
-                name: name,
-                about: about
-            })
-        });
-    }
+  setUser({ name, about }) {
+    return this._request(this._baseUrl + "/users/me", {
+      method: "PATCH",
+      headers: this._headers,
+      body: JSON.stringify({
+        name: name,
+        about: about,
+      }),
+    });
+  }
 
-    updateAvatar(avatarSrc) {
-        return this._request(this._baseUrl + '/users/me/avatar', {
-            method: 'PATCH',
-            headers: this._headers,
-            body: JSON.stringify({
-                avatar: avatarSrc
-            })
-        });
-    }
+  updateAvatar(data) {
+    return this._request(this._baseUrl + "/users/me/avatar", {
+      method: "PATCH",
+      headers: this._headers,
+      body: JSON.stringify({
+        avatar: data.avatarSrc,
+      }),
+    });
+  }
 
-    addCard({ name, link }) {
-        return this._request(this._baseUrl + '/cards', {
-            method: 'POST',
-            headers: this._headers,
-            body: JSON.stringify({
-                name: name,
-                link: link
-            })
-        });
-    }
+  addCard({ name, link }) {
+    return this._request(this._baseUrl + "/cards", {
+      method: "POST",
+      headers: this._headers,
+      body: JSON.stringify({
+        name: name,
+        link: link,
+      }),
+    });
+  }
 
-    likeCard(id, isLiked) {
-        return this._request(this._baseUrl + '/cards/likes/' + id, {
-            method: isLiked ? 'DELETE' : 'PUT',
-            headers: this._headers
-        });
-    }
+  likeCard(cardId, isLiked) {
+    return this._request(this._baseUrl + "/cards/likes/" + cardId, {
+      method: isLiked ? "DELETE" : "PUT",
+      headers: this._headers,
+    });
+  }
 
-    deleteCard(id) {
-        return this._request(this._baseUrl + '/cards/' + id, {
-            method: 'DELETE',
-            headers: this._headers
-        });
-    }
+  deleteCard(data) {
+    return this._request(this._baseUrl + `/cards/${data._id}`, {
+      method: "DELETE",
+      headers: this._headers,
+    });
+  }
 
-    getInitialCards() {
-        return this._request(this._baseUrl + '/cards', {
-            method: 'GET',
-            headers: this._headers
-        });
-    }
+  getInitialCards() {
+    return this._request(this._baseUrl + "/cards", {
+      method: "GET",
+      headers: this._headers,
+    });
+  }
 
-    _request(url, options) {
-        return fetch(url, options).then(this._checkResponse)
-    }
+  _request(url, options) {
+    return fetch(url, options).then(this._checkResponse);
+  }
 
-    _checkResponse(res) {
-        if (res.ok)
-            return res.json();
+  _checkResponse(res) {
+    if (res.ok) return res.json();
 
-        return Promise.reject(`Ошибка: ${res.status}`);
-    }
+    return Promise.reject(`Ошибка: ${res.status}`);
+  }
 }
 
 const api = new Api({
-    baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-77',
-    headers: {
-      authorization: '1a5c2685-c177-4bf1-8fad-293b36b650f1',
-      'Content-Type': 'application/json'
-    }
-  })
-  
-  export default api;
+  baseUrl: "https://mesto.nomoreparties.co/v1/cohort-77",
+  headers: {
+    authorization: "1a5c2685-c177-4bf1-8fad-293b36b650f1",
+    "Content-Type": "application/json",
+  },
+});
+
+export default api;

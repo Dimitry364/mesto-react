@@ -5,6 +5,7 @@ function ImagePopup(props) {
         props.card && "popup_opened"
       }`}
       id="popup-photos"
+      onClick={props.onCloseClick}
     >
       <div className="popup__photos-container">
         <img
