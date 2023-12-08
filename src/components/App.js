@@ -100,7 +100,6 @@ function App() {
       })
       .finally(() => {
         setIsAddPlaceLoading(false);
-        setIsAvatarPlaceLoading(false);
       });
   }
 
