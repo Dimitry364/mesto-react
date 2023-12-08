@@ -38,9 +38,7 @@ function AddPlacePopup(props) {
       id={"popup-add"}
       form={"card-create"}
       title={"Новое место"}
-      submitButtonAdd={"Создать"}
-      submitButtonLoading={"Сохранение..."}
-      onPlaceLoading={props.onPlaceLoading}
+      buttonText={props.isLoading ? "Сохранение..." : "Создать"}
       onSubmit={handleSubmit}
     >
       <div className="popup__field">

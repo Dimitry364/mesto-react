@@ -21,14 +21,11 @@ function EditAvatarPopup(props) {
       isOpen={props.isOpen}
       onClose={props.onClose}
       onCloseClickOverlay={props.onCloseClickOverlay}
-      submitButtonAdd={"Создать"}
-      submitButtonLoading={"Сохранение..."}
-      onPlaceLoading={props.onPlaceLoading}
+      buttonText={props.isLoading ? "Сохранение..." : "Создать"}
       id={"popup-add-avatar"}
       name={"avatar"}
       form={"card-create"}
       title={"Обновить аватар"}
-      buttonText={"Создать"}
       onSubmit={handleSubmit}
     >
       <div className="popup__field">

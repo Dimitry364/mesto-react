@@ -1,15 +1,6 @@
 import React from "react";
 
 function PopupWithForm(props) {
-
-  React.useEffect(() => {
-    if (props.isOpen) {
-      document.addEventListener('mousedown', props.onCloseClickOverlay);
-    } else {
-      document.removeEventListener('mousedown', props.onCloseClickOverlay);
-    }
-  }, [props.isOpen])
-
   return (
     <div
       className={`popup ${props.isOpen && `popup_opened`}`}
@@ -30,9 +21,9 @@ function PopupWithForm(props) {
               className="popup__button"
               name="submit"
               type="submit"
-              title={props.submitButtonAdd}
+              title={props.buttonText}
             >
-              {props.onPlaceLoading ? props.submitButtonLoading : props.submitButtonAdd}
+              {props.buttonText}
             </button>
           </fieldset>
           <button

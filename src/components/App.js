@@ -158,14 +158,14 @@ function App() {
           onClose={closeAllPopups}
           onUpdateUser={handleAvatarUpdate}
           onCloseClickOverlay={handlePopupCloseClickByOverlay}
-          onPlaceLoading={isAvatarPlaceLoading}
+          isLoading={isAvatarPlaceLoading}
         />
         <AddPlacePopup
           isOpen={isAddPlacePopupOpen}
           onClose={closeAllPopups}
           onUpdateUser={handleAddPlaceSubmit}
           onCloseClickOverlay={handlePopupCloseClickByOverlay}
-          onPlaceLoading={isAddPlaceLoading}
+          isLoading={isAddPlaceLoading}
         />
         <ImagePopup
           card={selectedCard}
